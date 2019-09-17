@@ -26,7 +26,7 @@ extension AppEnvironment {
     }
 }
 
-struct Environment {
+class Environment {
     var storage: Storage = FileManager.default
     var network: Network = URLSession.shared
     var cacher: Cacher = ImageCacher()

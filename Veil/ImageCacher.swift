@@ -12,11 +12,7 @@ final class ImageCacher: Cacher {
 
     func save(_ data: Data, named name: String) {
         cache.setObject(data as NSData, forKey: name as NSString)
-        var contains = false
-        filesQueue.sync {
-            contains = filesInQueue.contains(name)
-        }
-        if contains { return }
+        if filesQueue.sync(execute: { filesInQueue.contains(name) }) { return }
         filesQueue.async { self.filesInQueue.insert(name) }
         queue.async {
             // Explicitly capturing self here (in a real project view will deallocate,

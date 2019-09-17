@@ -29,7 +29,8 @@ final class FlickrImageFetcher: ImageFetcher {
     let host = URL(string: "https://api.flickr.com")!
     private var currentTask: NetworkTask?
 
-    func search(_ query: String, page: Int,
+    func search(_ query: String,
+                page: Int,
                 completion: @escaping (Result<[Image], ImageSearchError>) -> Void) {
         cancel()
         guard let url = buildURL(for: query, page: page) else { return }
