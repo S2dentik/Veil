@@ -38,6 +38,8 @@ final class ImageCacher: Cacher {
                 callback(AppEnvironment.storage.contents(atPath: path))
             }
         }
+        // The file might still be in queue, asyncing it on `filesQueue`
+        // will retrieve it after it's saved since it's serial
         filesQueue.async { [weak self] in
             guard self?.filesInQueue.contains(name) == true else { return callback(nil) }
             self?.queue.async {

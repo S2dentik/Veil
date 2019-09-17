@@ -40,7 +40,7 @@ final class ImageCollectionViewCell: CollectionViewCell {
         currentTask = AppEnvironment.network.dataTask(with: image.url) { [weak self] result in
             switch result {
             case .success(let data):
-                DispatchQueue.main.async {
+                UI {
                     AppEnvironment.cacher.save(data, named: image.id)
                     self?.setImageAnimatedly(UIImage(data: data))
                 }

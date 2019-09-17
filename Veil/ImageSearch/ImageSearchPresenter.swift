@@ -11,6 +11,7 @@ final class ImageSearchPresenter: ImageSearchViewOutput {
 
     var images = [Image]() {
         didSet {
+            if oldValue.count == images.count { return }
             let minValue = min(oldValue.count, images.count)
             let indexPaths = (minValue..<(minValue + abs(images.count - oldValue.count)))
                 .map { IndexPath(item: $0, section: 0) }
@@ -57,7 +58,7 @@ final class ImageSearchPresenter: ImageSearchViewOutput {
     private func search(query: String, page: Int) {
         imageFetcher.search(query, page: page) { [weak self] result in
             guard let welf = self else { return }
-            DispatchQueue.main.async {
+            UI {
                 switch result {
                 case .success(let images): welf.images += images
                 case .failure(let error): welf.view?.displayError(error.localizedDescription)

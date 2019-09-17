@@ -14,9 +14,11 @@ class MockStorage: Storage {
         return fileExistsStub
     }
 
+    var contentsAtPathCalledPath: String?
     var contentsAtPathStub: Data?
     var contentsAtPathCalled = false
     func contents(atPath path: String) -> Data? {
+        contentsAtPathCalledPath = path
         contentsAtPathCalled = true
 
         return contentsAtPathStub
