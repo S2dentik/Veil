@@ -11,6 +11,14 @@
 		693163CA232F96F1003FB33D /* ActivityIndicatorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */; };
 		693163CC232F973D003FB33D /* ActivityIndicatorReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */; };
 		693163CE232F989D003FB33D /* SupplementaryViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163CD232F989D003FB33D /* SupplementaryViewType.swift */; };
+		693163D2232F9F6F003FB33D /* FlickrImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163D1232F9F6F003FB33D /* FlickrImageFetcher.swift */; };
+		693163D4232FA535003FB33D /* ImageSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163D3232FA535003FB33D /* ImageSearchPresenter.swift */; };
+		693163D8232FA6EF003FB33D /* ImageSearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163D7232FA6EF003FB33D /* ImageSearchError.swift */; };
+		693163DA232FBE8B003FB33D /* URLSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163D9232FBE8B003FB33D /* URLSessionExtensions.swift */; };
+		693163DC232FC7C6003FB33D /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163DB232FC7C6003FB33D /* ImageFetcher.swift */; };
+		693163DE232FC84A003FB33D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163DD232FC84A003FB33D /* Image.swift */; };
+		693163E1232FCA6C003FB33D /* ImageSearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163E0232FCA6C003FB33D /* ImageSearchBuilder.swift */; };
+		693163E3232FCA9D003FB33D /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163E2232FCA9D003FB33D /* StoryboardInstantiable.swift */; };
 		69A9F6E2232F8003008C7A75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F6E1232F8003008C7A75 /* AppDelegate.swift */; };
 		69A9F6E4232F8003008C7A75 /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F6E3232F8003008C7A75 /* ImageSearchViewController.swift */; };
 		69A9F6E7232F8003008C7A75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69A9F6E5232F8003008C7A75 /* Main.storyboard */; };
@@ -18,7 +26,7 @@
 		69A9F6EC232F8006008C7A75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69A9F6EA232F8006008C7A75 /* LaunchScreen.storyboard */; };
 		69A9F6F7232F8006008C7A75 /* VeilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F6F6232F8006008C7A75 /* VeilTests.swift */; };
 		69A9F703232F81C1008C7A75 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */; };
-		69A9F707232F8355008C7A75 /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F706232F8355008C7A75 /* CellType.swift */; };
+		69A9F707232F8355008C7A75 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F706232F8355008C7A75 /* Identifiable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +44,14 @@
 		693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorReusableView.swift; sourceTree = "<group>"; };
 		693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityIndicatorReusableView.xib; sourceTree = "<group>"; };
 		693163CD232F989D003FB33D /* SupplementaryViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewType.swift; sourceTree = "<group>"; };
+		693163D1232F9F6F003FB33D /* FlickrImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImageFetcher.swift; sourceTree = "<group>"; };
+		693163D3232FA535003FB33D /* ImageSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchPresenter.swift; sourceTree = "<group>"; };
+		693163D7232FA6EF003FB33D /* ImageSearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchError.swift; sourceTree = "<group>"; };
+		693163D9232FBE8B003FB33D /* URLSessionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtensions.swift; sourceTree = "<group>"; };
+		693163DB232FC7C6003FB33D /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
+		693163DD232FC84A003FB33D /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		693163E0232FCA6C003FB33D /* ImageSearchBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchBuilder.swift; sourceTree = "<group>"; };
+		693163E2232FCA9D003FB33D /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		69A9F6DE232F8003008C7A75 /* Veil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Veil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69A9F6E1232F8003008C7A75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69A9F6E3232F8003008C7A75 /* ImageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
@@ -47,7 +63,7 @@
 		69A9F6F6232F8006008C7A75 /* VeilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeilTests.swift; sourceTree = "<group>"; };
 		69A9F6F8232F8006008C7A75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		69A9F706232F8355008C7A75 /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
+		69A9F706232F8355008C7A75 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +84,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		693163CF232F9F24003FB33D /* IBFiles */ = {
+			isa = PBXGroup;
+			children = (
+				69A9F6E5232F8003008C7A75 /* Main.storyboard */,
+				693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */,
+				693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */,
+			);
+			path = IBFiles;
+			sourceTree = "<group>";
+		};
+		693163D0232F9F38003FB33D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				69A9F706232F8355008C7A75 /* Identifiable.swift */,
+				693163CD232F989D003FB33D /* SupplementaryViewType.swift */,
+				693163DB232FC7C6003FB33D /* ImageFetcher.swift */,
+				693163DD232FC84A003FB33D /* Image.swift */,
+				693163E2232FCA9D003FB33D /* StoryboardInstantiable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		693163DF232FCA51003FB33D /* ImageSearch */ = {
+			isa = PBXGroup;
+			children = (
+				69A9F6E3232F8003008C7A75 /* ImageSearchViewController.swift */,
+				693163D3232FA535003FB33D /* ImageSearchPresenter.swift */,
+				693163D7232FA6EF003FB33D /* ImageSearchError.swift */,
+				69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */,
+				693163E0232FCA6C003FB33D /* ImageSearchBuilder.swift */,
+			);
+			path = ImageSearch;
+			sourceTree = "<group>";
+		};
 		69A9F6D5232F8003008C7A75 = {
 			isa = PBXGroup;
 			children = (
@@ -89,15 +139,13 @@
 		69A9F6E0232F8003008C7A75 /* Veil */ = {
 			isa = PBXGroup;
 			children = (
+				693163DF232FCA51003FB33D /* ImageSearch */,
 				69A9F6E1232F8003008C7A75 /* AppDelegate.swift */,
-				69A9F6E3232F8003008C7A75 /* ImageSearchViewController.swift */,
-				69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */,
 				693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */,
-				69A9F706232F8355008C7A75 /* CellType.swift */,
-				693163CD232F989D003FB33D /* SupplementaryViewType.swift */,
-				69A9F6E5232F8003008C7A75 /* Main.storyboard */,
-				693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */,
-				693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */,
+				693163D1232F9F6F003FB33D /* FlickrImageFetcher.swift */,
+				693163D9232FBE8B003FB33D /* URLSessionExtensions.swift */,
+				693163D0232F9F38003FB33D /* Protocols */,
+				693163CF232F9F24003FB33D /* IBFiles */,
 				69A9F701232F814D008C7A75 /* SupportingFiles */,
 			);
 			path = Veil;
@@ -225,11 +273,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				693163D8232FA6EF003FB33D /* ImageSearchError.swift in Sources */,
+				693163DE232FC84A003FB33D /* Image.swift in Sources */,
 				693163CE232F989D003FB33D /* SupplementaryViewType.swift in Sources */,
 				69A9F703232F81C1008C7A75 /* ImageCollectionViewCell.swift in Sources */,
+				693163E3232FCA9D003FB33D /* StoryboardInstantiable.swift in Sources */,
+				693163D4232FA535003FB33D /* ImageSearchPresenter.swift in Sources */,
+				693163E1232FCA6C003FB33D /* ImageSearchBuilder.swift in Sources */,
 				693163CA232F96F1003FB33D /* ActivityIndicatorReusableView.swift in Sources */,
 				69A9F6E4232F8003008C7A75 /* ImageSearchViewController.swift in Sources */,
-				69A9F707232F8355008C7A75 /* CellType.swift in Sources */,
+				693163DA232FBE8B003FB33D /* URLSessionExtensions.swift in Sources */,
+				69A9F707232F8355008C7A75 /* Identifiable.swift in Sources */,
+				693163D2232F9F6F003FB33D /* FlickrImageFetcher.swift in Sources */,
+				693163DC232FC7C6003FB33D /* ImageFetcher.swift in Sources */,
 				69A9F6E2232F8003008C7A75 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

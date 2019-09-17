@@ -21,7 +21,6 @@ typealias CollectionViewSupplementaryView = UICollectionReusableView & Supplemen
 extension UICollectionView {
     func register<T: CollectionViewSupplementaryView>(_ type: T.Type) {
         register(UINib(nibName: type.identifier, bundle: nil), forSupplementaryViewOfKind: type.uiKitType, withReuseIdentifier: type.identifier)
-//        register(type, forSupplementaryViewOfKind: type.uiKitType, withReuseIdentifier: type.identifier)
     }
 
     func dequeue<T: CollectionViewSupplementaryView>(at indexPath: IndexPath) -> T {

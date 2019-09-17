@@ -5,9 +5,7 @@ final class ActivityIndicatorReusableView: CollectionViewSupplementaryView {
 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
+    func startLoading() {
         activityIndicator.startAnimating()
     }
 }

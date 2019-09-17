@@ -1,6 +1,14 @@
 import UIKit
 
-class ImageSearchViewController: UIViewController {
+protocol ImageSearchViewInput: class {
+    func displayError(_ error: String)
+    func insert(at indexPaths: [IndexPath])
+    func delete(at indexPaths: [IndexPath])
+}
+
+final class ImageSearchViewController: UIViewController, StoryboardInstantiable {
+
+    static let storyboardName = "Main"
     
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
@@ -8,6 +16,8 @@ class ImageSearchViewController: UIViewController {
     private let interitemSpacing: CGFloat = 10
     private let sectionInsets: CGFloat = 10
     private let numberOfItemsInRow = 3
+
+    var output: ImageSearchViewOutput!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,22 +27,45 @@ class ImageSearchViewController: UIViewController {
     }
 }
 
-extension ImageSearchViewController: UICollectionViewDelegate {
-    
+extension ImageSearchViewController: ImageSearchViewInput {
+    func displayError(_ error: String) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: false, completion: nil)
+    }
+
+    func insert(at indexPaths: [IndexPath]) {
+        collectionView.insertItems(at: indexPaths)
+    }
+
+    func delete(at indexPaths: [IndexPath]) {
+        collectionView.deleteItems(at: indexPaths)
+    }
 }
 
 extension ImageSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return output.numberOfImages
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ImageCollectionViewCell = collectionView.dequeue(at: indexPath)
-        cell.contentView.backgroundColor = .red
+        if let url = output.getImage(at: indexPath)?.url {
+            cell.displayImage(at: url)
+        }
         
         return cell
+    }
+}
+
+extension ImageSearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplaySupplementaryView view: UICollectionReusableView,
+                        forElementKind elementKind: String,
+                        at indexPath: IndexPath) {
+        output.loadNext(query: searchBar.text ?? "")
     }
 }
 
@@ -62,6 +95,7 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         let footer: ActivityIndicatorReusableView = collectionView.dequeue(at: indexPath)
+        footer.startLoading()
 
         return footer
     }
@@ -69,6 +103,13 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let text = searchBar.text, text.count > 0 else { return .zero }
         return CGSize(width: collectionView.bounds.width, height: 50)
+    }
+}
+
+extension ImageSearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        output.search(query: searchText)
     }
 }
