@@ -61,6 +61,6 @@ final class ImageCacherTestCase: XCTestCase {
         wait(for: [correctImageReturned], timeout: 3)
         XCTAssert(storage.contentsAtPathCalled)
         XCTAssertEqual(storage.contentsAtPathCalledPath,
-                       storage.documentsDirectory.appendingPathComponent("\(name).jpg").path)
+                       storage.documentsDirectory.appendingPathComponent("Images").appendingPathComponent("\(name).jpg").path)
     }
 }

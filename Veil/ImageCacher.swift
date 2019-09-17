@@ -12,6 +12,8 @@ final class ImageCacher: Cacher {
 
     func save(_ data: Data, named name: String) {
         cache.setObject(data as NSData, forKey: name as NSString)
+        // This function will not be called from inside, and outside calls cannot happen on `filesQueue` thread,
+        // so no dead-lock here
         if filesQueue.sync(execute: { filesInQueue.contains(name) }) { return }
         filesQueue.async { self.filesInQueue.insert(name) }
         queue.async {
@@ -51,6 +53,8 @@ final class ImageCacher: Cacher {
     }
 
     private func fullPath(forImageNamed name: String) -> String {
-        return documentsDirectory.appendingPathComponent(name + ".jpg").path
+        return documentsDirectory
+            .appendingPathComponent("Images")
+            .appendingPathComponent(name + ".jpg").path
     }
 }
