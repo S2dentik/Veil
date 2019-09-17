@@ -9,7 +9,7 @@ enum RequestError: Error {
 
 extension URLSession {
     func dataTask(with url: URL,
-                  completion: @escaping (Result<Data, RequestError>) -> Void) -> URLSessionDataTask {
+                  completion: @escaping (Result<Data, RequestError>) -> Void) -> NetworkTask {
         return dataTask(with: url) { data, response, error in
             if let error = error as NSError? {
                 if error.code == NSURLErrorCancelled { return }

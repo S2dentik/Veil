@@ -9,7 +9,7 @@ final class ImageCollectionViewCell: CollectionViewCell {
     @IBOutlet private var imageView: UIImageView!
     weak var delegate: ImageCollectionViewCellDelegate?
 
-    private var currentTask: URLSessionTask?
+    private var currentTask: NetworkTask?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,11 +26,22 @@ final class ImageCollectionViewCell: CollectionViewCell {
         imageView.image = nil
     }
 
-    func displayImage(at url: URL) {
-        currentTask = URLSession.shared.dataTask(with: url) { [weak self] result in
+    func displayImage(_ image: Image) {
+        AppEnvironment.cacher.retrieve(named: image.id, completionQueue: .main) { [weak self] cachedData in
+            if let data = cachedData {
+                self?.setImageAnimatedly(UIImage(data: data))
+            } else {
+                self?.fetchImage(image)
+            }
+        }
+    }
+
+    private func fetchImage(_ image: Image) {
+        currentTask = AppEnvironment.network.dataTask(with: image.url) { [weak self] result in
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
+                    AppEnvironment.cacher.save(data, named: image.id)
                     self?.setImageAnimatedly(UIImage(data: data))
                 }
             case .failure(let error):

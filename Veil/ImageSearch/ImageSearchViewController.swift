@@ -52,8 +52,8 @@ extension ImageSearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ImageCollectionViewCell = collectionView.dequeue(at: indexPath)
-        if let url = output.getImage(at: indexPath)?.url {
-            cell.displayImage(at: url)
+        if let image = output.getImage(at: indexPath) {
+            cell.displayImage(image)
         }
         
         return cell

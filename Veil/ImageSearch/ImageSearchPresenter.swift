@@ -22,7 +22,8 @@ final class ImageSearchPresenter: ImageSearchViewOutput {
     weak var view: ImageSearchViewInput?
     let imageFetcher: ImageFetcher
 
-    init(view: ImageSearchViewInput, imageFetcher: ImageFetcher = FlickrImageFetcher()) {
+    init(view: ImageSearchViewInput,
+         imageFetcher: ImageFetcher = FlickrImageFetcher()) {
         self.view = view
         self.imageFetcher = imageFetcher
     }
