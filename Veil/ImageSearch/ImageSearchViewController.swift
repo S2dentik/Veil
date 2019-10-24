@@ -10,9 +10,10 @@ final class ImageSearchViewController: UIViewController, StoryboardInstantiable 
 
     static let storyboardName = "Main"
     
-    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
-    
+    @IBOutlet var searchBarContainerView: UIView!
+    var searchController: UISearchController!
+
     private let interitemSpacing: CGFloat = 10
     private let sectionInsets: CGFloat = 10
     private let numberOfItemsInRow = 3
@@ -21,7 +22,14 @@ final class ImageSearchViewController: UIViewController, StoryboardInstantiable 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        searchController = UISearchController(searchResultsController: nil)
+        searchBarContainerView.embedSubview(searchController.searchBar)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+
         collectionView.register(ImageCollectionViewCell.self)
         collectionView.register(ActivityIndicatorReusableView.self)
     }
@@ -65,7 +73,7 @@ extension ImageSearchViewController: UICollectionViewDelegate {
                         willDisplaySupplementaryView view: UICollectionReusableView,
                         forElementKind elementKind: String,
                         at indexPath: IndexPath) {
-        output.loadNext(query: searchBar.text ?? "")
+        output.loadNext(query: searchController.searchBar.text ?? "")
     }
 }
 
@@ -103,13 +111,13 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard let text = searchBar.text, text.count > 0 else { return .zero }
+        guard let text = searchController.searchBar.text, text.count > 0 else { return .zero }
         return CGSize(width: collectionView.bounds.width, height: 50)
     }
 }
 
-extension ImageSearchViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        output.search(query: searchText)
+extension ImageSearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        searchController.searchBar.text.map(output.search)
     }
 }

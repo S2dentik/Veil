@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SGa-f0-0br">
-                                <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                                <rect key="frame" x="0.0" y="98" width="414" height="764"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ztk-vS-HkD">
                                     <size key="itemSize" width="50" height="50"/>
@@ -33,30 +31,29 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="z3V-mx-DcN"/>
                                 </connections>
                             </collectionView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="4HM-Ei-IdI">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ZJi-JH-z29"/>
-                                </connections>
-                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1T-s3-YZh">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="2zm-Yc-lb8"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SGa-f0-0br" secondAttribute="trailing" id="0x1-ai-XhJ"/>
-                            <constraint firstItem="SGa-f0-0br" firstAttribute="top" secondItem="4HM-Ei-IdI" secondAttribute="bottom" id="5Ku-OT-9WI"/>
-                            <constraint firstItem="4HM-Ei-IdI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6VD-aO-UKi"/>
-                            <constraint firstItem="4HM-Ei-IdI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="H4R-5S-99D"/>
-                            <constraint firstItem="4HM-Ei-IdI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Nnt-I3-RCO"/>
+                            <constraint firstItem="SGa-f0-0br" firstAttribute="top" secondItem="d1T-s3-YZh" secondAttribute="bottom" constant="10" id="5g6-cI-5C6"/>
                             <constraint firstItem="SGa-f0-0br" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="O6I-F3-vYj"/>
-                            <constraint firstItem="SGa-f0-0br" firstAttribute="top" secondItem="4HM-Ei-IdI" secondAttribute="bottom" id="TNx-5r-LSZ"/>
+                            <constraint firstItem="d1T-s3-YZh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XiS-tW-Zjo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SGa-f0-0br" secondAttribute="bottom" id="b2f-gV-bQG"/>
+                            <constraint firstItem="d1T-s3-YZh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="o1s-jo-H5N"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d1T-s3-YZh" secondAttribute="trailing" id="xZC-u3-Rlf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="SGa-f0-0br" id="ie8-Aq-R6z"/>
-                        <outlet property="searchBar" destination="4HM-Ei-IdI" id="0uj-tX-WtH"/>
+                        <outlet property="searchBarContainerView" destination="d1T-s3-YZh" id="0pa-sw-YHD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

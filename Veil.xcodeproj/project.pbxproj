@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6925E8CD23624997001E182E /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6925E8CC23624997001E182E /* UIViewExtensions.swift */; };
 		693163C8232F8581003FB33D /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */; };
 		693163CA232F96F1003FB33D /* ActivityIndicatorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */; };
 		693163CC232F973D003FB33D /* ActivityIndicatorReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6925E8CC23624997001E182E /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActivityIndicatorReusableView.swift; path = ../ActivityIndicatorReusableView.swift; sourceTree = "<group>"; };
 		693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityIndicatorReusableView.xib; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				693163D9232FBE8B003FB33D /* URLSessionExtensions.swift */,
 				6996D14523313A3B001EE5F5 /* Helpers.swift */,
+				6925E8CC23624997001E182E /* UIViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -198,9 +201,8 @@
 			children = (
 				69A9F6E1232F8003008C7A75 /* AppDelegate.swift */,
 				693163E82330E895003FB33D /* AppEnvironment.swift */,
-				693163D1232F9F6F003FB33D /* FlickrImageFetcher.swift */,
-				693163E42330E706003FB33D /* ImageCacher.swift */,
 				693163DF232FCA51003FB33D /* ImageSearch */,
+				69D5A73B2362457F000F79C2 /* Services */,
 				693163D0232F9F38003FB33D /* Protocols */,
 				693163F323311ED6003FB33D /* Extensions */,
 				693163CF232F9F24003FB33D /* IBFiles */,
@@ -229,6 +231,15 @@
 				69A9F6ED232F8006008C7A75 /* Info.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		69D5A73B2362457F000F79C2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				693163D1232F9F6F003FB33D /* FlickrImageFetcher.swift */,
+				693163E42330E706003FB33D /* ImageCacher.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6925E8CD23624997001E182E /* UIViewExtensions.swift in Sources */,
 				693163D8232FA6EF003FB33D /* ImageSearchError.swift in Sources */,
 				6996D14623313A3B001EE5F5 /* Helpers.swift in Sources */,
 				693163DE232FC84A003FB33D /* Image.swift in Sources */,
