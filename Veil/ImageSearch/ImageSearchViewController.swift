@@ -12,6 +12,7 @@ final class ImageSearchViewController: UIViewController, StoryboardInstantiable 
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var searchBarContainerView: UIView!
+    @IBOutlet var searchHistoryTableView: UITableView!
     var searchController: UISearchController!
 
     private let interitemSpacing: CGFloat = 10
@@ -24,11 +25,16 @@ final class ImageSearchViewController: UIViewController, StoryboardInstantiable 
         super.viewDidLoad()
 
         searchController = UISearchController(searchResultsController: nil)
-        searchBarContainerView.embedSubview(searchController.searchBar)
+//        searchBarContainerView.embedSubview(searchController.searchBar)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
+
+        searchController.searchBar.delegate = self
+
+        searchHistoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        searchHistoryTableView.dataSource = self
 
         collectionView.register(ImageCollectionViewCell.self)
         collectionView.register(ActivityIndicatorReusableView.self)
@@ -119,5 +125,28 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
 extension ImageSearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         searchController.searchBar.text.map(output.search)
+    }
+}
+
+extension ImageSearchViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "number \(indexPath.item)"
+
+        return cell
+    }
+}
+
+extension ImageSearchViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchHistoryTableView.isHidden = false
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchHistoryTableView.isHidden = true
     }
 }

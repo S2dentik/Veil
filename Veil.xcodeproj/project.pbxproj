@@ -43,6 +43,7 @@
 		69A9F6F7232F8006008C7A75 /* FlickrImageFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F6F6232F8006008C7A75 /* FlickrImageFetcherTests.swift */; };
 		69A9F703232F81C1008C7A75 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */; };
 		69A9F707232F8355008C7A75 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F706232F8355008C7A75 /* Identifiable.swift */; };
+		69BAE1C72362580900534B6E /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1C62362580900534B6E /* ContentSizedTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		69A9F6F8232F8006008C7A75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		69A9F706232F8355008C7A75 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		69BAE1C62362580900534B6E /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 				693163F323311ED6003FB33D /* Extensions */,
 				693163CF232F9F24003FB33D /* IBFiles */,
 				69A9F701232F814D008C7A75 /* SupportingFiles */,
+				69BAE1C62362580900534B6E /* ContentSizedTableView.swift */,
 			);
 			path = Veil;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 			files = (
 				6925E8CD23624997001E182E /* UIViewExtensions.swift in Sources */,
 				693163D8232FA6EF003FB33D /* ImageSearchError.swift in Sources */,
+				69BAE1C72362580900534B6E /* ContentSizedTableView.swift in Sources */,
 				6996D14623313A3B001EE5F5 /* Helpers.swift in Sources */,
 				693163DE232FC84A003FB33D /* Image.swift in Sources */,
 				693163E52330E706003FB33D /* ImageCacher.swift in Sources */,
