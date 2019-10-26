@@ -2,22 +2,23 @@ import UIKit
 
 protocol ImageSearchViewInput: class {
     func displayError(_ error: String)
-    func insert(at indexPaths: [IndexPath])
-    func delete(at indexPaths: [IndexPath])
+//    func insert(at indexPaths: [IndexPath])
+//    func delete(at indexPaths: [IndexPath])
 }
 
 final class ImageSearchViewController: UIViewController, StoryboardInstantiable {
 
     static let storyboardName = "Main"
+
+    let disposeBag = DisposeBag()
     
     @IBOutlet var collectionView: UICollectionView!
-    @IBOutlet var searchBarContainerView: UIView!
     @IBOutlet var searchHistoryTableView: UITableView!
     var searchController: UISearchController!
 
-    private let interitemSpacing: CGFloat = 10
-    private let sectionInsets: CGFloat = 10
-    private let numberOfItemsInRow = 3
+    fileprivate let interitemSpacing: CGFloat = 10
+    fileprivate let sectionInsets: CGFloat = 10
+    fileprivate let numberOfItemsInRow = 2
 
     var output: ImageSearchViewOutput!
 
@@ -25,16 +26,12 @@ final class ImageSearchViewController: UIViewController, StoryboardInstantiable 
         super.viewDidLoad()
 
         searchController = UISearchController(searchResultsController: nil)
-//        searchBarContainerView.embedSubview(searchController.searchBar)
-        searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
 
-        searchController.searchBar.delegate = self
-
         searchHistoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        searchHistoryTableView.dataSource = self
 
         collectionView.register(ImageCollectionViewCell.self)
         collectionView.register(ActivityIndicatorReusableView.self)
@@ -47,40 +44,6 @@ extension ImageSearchViewController: ImageSearchViewInput {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: false, completion: nil)
     }
-
-    func insert(at indexPaths: [IndexPath]) {
-        collectionView.insertItems(at: indexPaths)
-    }
-
-    func delete(at indexPaths: [IndexPath]) {
-        collectionView.deleteItems(at: indexPaths)
-    }
-}
-
-extension ImageSearchViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        return output.numberOfImages
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ImageCollectionViewCell = collectionView.dequeue(at: indexPath)
-        if let image = output.getImage(at: indexPath) {
-            cell.displayImage(image)
-        }
-        
-        return cell
-    }
-}
-
-extension ImageSearchViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView,
-                        willDisplaySupplementaryView view: UICollectionReusableView,
-                        forElementKind elementKind: String,
-                        at indexPath: IndexPath) {
-        output.loadNext(query: searchController.searchBar.text ?? "")
-    }
 }
 
 extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
@@ -89,29 +52,20 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing = sectionInsets * 2 + interitemSpacing * (CGFloat(numberOfItemsInRow) - 1)
         let width = (collectionView.bounds.width - spacing) / CGFloat(numberOfItemsInRow)
-        
+
         return CGSize(width: Int(width), height: 150)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return interitemSpacing
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: sectionInsets, left: sectionInsets, bottom: sectionInsets, right: sectionInsets)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        let footer: ActivityIndicatorReusableView = collectionView.dequeue(at: indexPath)
-        footer.startLoading()
-
-        return footer
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -122,31 +76,96 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ImageSearchViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        searchController.searchBar.text.map(output.search)
+import RxCocoa
+import RxSwift
+import RxDataSources
+
+extension ImageSearchViewController {
+    static func build(history: SearchHistory, fetcher: ImageFetcher = FlickrImageFetcher()) -> ImageSearchViewController {
+        let vc = ImageSearchViewController.instantiate()
+        vc.output = ImageSearchPresenter(view: vc)
+        _ = vc.view
+
+        Observable.just(history.items)
+            .bind(to: vc.searchHistoryTableView.rx.items(cellIdentifier: "UITableViewCell",
+                                                         cellType: UITableViewCell.self)) { _, item, cell in
+                                                            cell.textLabel?.text = item
+        }.disposed(by: vc.disposeBag)
+
+        vc.searchController.searchBar.rx
+            .textDidBeginEditing.bind(onNext: { vc.searchHistoryTableView.isHidden = false })
+            .disposed(by: vc.disposeBag)
+        vc.searchController.searchBar.rx
+            .textDidEndEditing.bind(onNext: { vc.searchHistoryTableView.isHidden = true })
+            .disposed(by: vc.disposeBag)
+
+        vc.collectionView.rx.setDelegate(vc).disposed(by: vc.disposeBag)
+
+        var page = 0
+        var images = [Image]()
+
+        let resetState = {
+            page = 0
+            images = []
+        }
+
+        let searchText = vc.searchController.searchBar.rx
+            .text.asObservable()
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .do(onNext: { _ in resetState() })
+            .compactMap { $0 }
+
+
+        let scrolledToBottom = vc.collectionView.rx.contentOffset.map {
+            $0.y + vc.collectionView.bounds.height + 20 > vc.collectionView.contentSize.height
+        }
+        .distinctUntilChanged()
+        .filter { $0 }.map { _ in }
+        .do(onNext: { page += 1 })
+        .compactMap { vc.searchController.searchBar.text }
+
+        let search = Observable.merge(searchText, scrolledToBottom)
+            .map { ($0, page) }
+            .distinctUntilChanged { $0.0 == $1.0 && $0.1 == $1.1 }
+            .flatMap { (query, page) -> Observable<[Image]> in
+                if query.isEmpty {
+                    resetState()
+                    return .just([])
+                }
+                return fetcher.search(query, page:  page)
+        }
+
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, Image>>(configureCell: { _, cv, indexPath, image in
+            let cell: ImageCollectionViewCell = cv.dequeue(at: indexPath)
+            cell.displayImage(image)
+
+            return cell
+        }, configureSupplementaryView: { _, cv, kind, indexPath in
+            let footer: ActivityIndicatorReusableView = cv.dequeue(at: indexPath)
+            footer.startLoading()
+
+            return footer
+        })
+
+        DispatchQueue.main.async {
+            search
+                .map { newImages in
+                    images += newImages
+                    return [AnimatableSectionModel<String, Image>(model: "", items: images)]
+                }
+                .bind(to: vc.collectionView.rx.items(dataSource: dataSource))
+                .disposed(by: vc.disposeBag)
+        }
+
+        return vc
     }
 }
 
-extension ImageSearchViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "number \(indexPath.item)"
-
-        return cell
-    }
-}
-
-extension ImageSearchViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchHistoryTableView.isHidden = false
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchHistoryTableView.isHidden = true
+import Differentiator
+extension Image: IdentifiableType {
+    var identity: Image {
+        return Image(id: "\(Int.random(in: 10000...100000))",
+            farm: Int.random(in: 10000...100000),
+            server: "", secret: "")
     }
 }

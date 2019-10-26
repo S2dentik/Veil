@@ -18,7 +18,6 @@
 		693163DA232FBE8B003FB33D /* URLSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163D9232FBE8B003FB33D /* URLSessionExtensions.swift */; };
 		693163DC232FC7C6003FB33D /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163DB232FC7C6003FB33D /* ImageFetcher.swift */; };
 		693163DE232FC84A003FB33D /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163DD232FC84A003FB33D /* Image.swift */; };
-		693163E1232FCA6C003FB33D /* ImageSearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163E0232FCA6C003FB33D /* ImageSearchBuilder.swift */; };
 		693163E3232FCA9D003FB33D /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163E2232FCA9D003FB33D /* StoryboardInstantiable.swift */; };
 		693163E52330E706003FB33D /* ImageCacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163E42330E706003FB33D /* ImageCacher.swift */; };
 		693163E72330E762003FB33D /* Cacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163E62330E762003FB33D /* Cacher.swift */; };
@@ -44,6 +43,9 @@
 		69A9F703232F81C1008C7A75 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */; };
 		69A9F707232F8355008C7A75 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F706232F8355008C7A75 /* Identifiable.swift */; };
 		69BAE1C72362580900534B6E /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1C62362580900534B6E /* ContentSizedTableView.swift */; };
+		69BAE1C923625E2300534B6E /* SearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1C823625E2300534B6E /* SearchHistory.swift */; };
+		69BAE1CB2362FD5600534B6E /* ImageSearchFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1CA2362FD5600534B6E /* ImageSearchFlowLayout.swift */; };
+		F7FE27E80A7FAFC1D9156ADB /* libPods-Veil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3729B62E416CBB0F12343D20 /* libPods-Veil.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3729B62E416CBB0F12343D20 /* libPods-Veil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Veil.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		41F48EB94C60EFDDC7D0EC80 /* Pods-Veil.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Veil.debug.xcconfig"; path = "Target Support Files/Pods-Veil/Pods-Veil.debug.xcconfig"; sourceTree = "<group>"; };
 		6925E8CC23624997001E182E /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActivityIndicatorReusableView.swift; path = ../ActivityIndicatorReusableView.swift; sourceTree = "<group>"; };
@@ -68,7 +72,6 @@
 		693163D9232FBE8B003FB33D /* URLSessionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLSessionExtensions.swift; path = ../URLSessionExtensions.swift; sourceTree = "<group>"; };
 		693163DB232FC7C6003FB33D /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
 		693163DD232FC84A003FB33D /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		693163E0232FCA6C003FB33D /* ImageSearchBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchBuilder.swift; sourceTree = "<group>"; };
 		693163E2232FCA9D003FB33D /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		693163E42330E706003FB33D /* ImageCacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacher.swift; sourceTree = "<group>"; };
 		693163E62330E762003FB33D /* Cacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cacher.swift; sourceTree = "<group>"; };
@@ -98,6 +101,9 @@
 		69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		69A9F706232F8355008C7A75 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		69BAE1C62362580900534B6E /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
+		69BAE1C823625E2300534B6E /* SearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistory.swift; sourceTree = "<group>"; };
+		69BAE1CA2362FD5600534B6E /* ImageSearchFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchFlowLayout.swift; sourceTree = "<group>"; };
+		97A191E868F1B8EFF640EC73 /* Pods-Veil.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Veil.release.xcconfig"; path = "Target Support Files/Pods-Veil/Pods-Veil.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7FE27E80A7FAFC1D9156ADB /* libPods-Veil.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +125,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A5C6F52F38CDFF801C45EED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				41F48EB94C60EFDDC7D0EC80 /* Pods-Veil.debug.xcconfig */,
+				97A191E868F1B8EFF640EC73 /* Pods-Veil.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		693163CF232F9F24003FB33D /* IBFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,7 +167,6 @@
 				693163D3232FA535003FB33D /* ImageSearchPresenter.swift */,
 				693163D7232FA6EF003FB33D /* ImageSearchError.swift */,
 				69A9F702232F81C1008C7A75 /* ImageCollectionViewCell.swift */,
-				693163E0232FCA6C003FB33D /* ImageSearchBuilder.swift */,
 				693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */,
 			);
 			path = ImageSearch;
@@ -186,6 +201,8 @@
 				69A9F6E0232F8003008C7A75 /* Veil */,
 				69A9F6F5232F8006008C7A75 /* VeilTests */,
 				69A9F6DF232F8003008C7A75 /* Products */,
+				5A5C6F52F38CDFF801C45EED /* Pods */,
+				78C82D6E4C61E6F7F392137B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -210,6 +227,7 @@
 				693163CF232F9F24003FB33D /* IBFiles */,
 				69A9F701232F814D008C7A75 /* SupportingFiles */,
 				69BAE1C62362580900534B6E /* ContentSizedTableView.swift */,
+				69BAE1CA2362FD5600534B6E /* ImageSearchFlowLayout.swift */,
 			);
 			path = Veil;
 			sourceTree = "<group>";
@@ -241,8 +259,17 @@
 			children = (
 				693163D1232F9F6F003FB33D /* FlickrImageFetcher.swift */,
 				693163E42330E706003FB33D /* ImageCacher.swift */,
+				69BAE1C823625E2300534B6E /* SearchHistory.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		78C82D6E4C61E6F7F392137B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3729B62E416CBB0F12343D20 /* libPods-Veil.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,6 +279,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69A9F6FB232F8006008C7A75 /* Build configuration list for PBXNativeTarget "Veil" */;
 			buildPhases = (
+				DA3B85CC6E5BF37520F1EB27 /* [CP] Check Pods Manifest.lock */,
 				69A9F6DA232F8003008C7A75 /* Sources */,
 				69A9F6DB232F8003008C7A75 /* Frameworks */,
 				69A9F6DC232F8003008C7A75 /* Resources */,
@@ -343,6 +371,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DA3B85CC6E5BF37520F1EB27 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Veil-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		69A9F6DA232F8003008C7A75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -360,7 +413,6 @@
 				693163E3232FCA9D003FB33D /* StoryboardInstantiable.swift in Sources */,
 				693163EF2330F152003FB33D /* NetworkTask.swift in Sources */,
 				693163D4232FA535003FB33D /* ImageSearchPresenter.swift in Sources */,
-				693163E1232FCA6C003FB33D /* ImageSearchBuilder.swift in Sources */,
 				693163F12330F159003FB33D /* Network.swift in Sources */,
 				693163CA232F96F1003FB33D /* ActivityIndicatorReusableView.swift in Sources */,
 				69A9F6E4232F8003008C7A75 /* ImageSearchViewController.swift in Sources */,
@@ -370,6 +422,8 @@
 				693163E72330E762003FB33D /* Cacher.swift in Sources */,
 				693163DC232FC7C6003FB33D /* ImageFetcher.swift in Sources */,
 				69A9F6E2232F8003008C7A75 /* AppDelegate.swift in Sources */,
+				69BAE1CB2362FD5600534B6E /* ImageSearchFlowLayout.swift in Sources */,
+				69BAE1C923625E2300534B6E /* SearchHistory.swift in Sources */,
 				693163E92330E895003FB33D /* AppEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -538,6 +592,7 @@
 		};
 		69A9F6FC232F8006008C7A75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41F48EB94C60EFDDC7D0EC80 /* Pods-Veil.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -557,6 +612,7 @@
 		};
 		69A9F6FD232F8006008C7A75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97A191E868F1B8EFF640EC73 /* Pods-Veil.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

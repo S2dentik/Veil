@@ -1,6 +1,7 @@
 import Foundation
+import RxSwift
 
-struct FlickrPhoto: Image, Decodable {
+struct Image: Decodable, Hashable {
     let id: String
     let farm: Int
     let server: String
@@ -18,7 +19,7 @@ struct FlickrPhotos: Decodable {
     let pages: Int
     let perpage: Int
     let total: String
-    let photo: [FlickrPhoto]
+    let photo: [Image]
 }
 
 struct FlickrResponse: Decodable {
@@ -27,31 +28,23 @@ struct FlickrResponse: Decodable {
 
 final class FlickrImageFetcher: ImageFetcher {
     let host = URL(string: "https://api.flickr.com")!
-    private var currentTask: NetworkTask?
 
-    func search(_ query: String,
-                page: Int,
-                completion: @escaping (Result<[Image], ImageSearchError>) -> Void) {
-        cancel()
-        guard let url = buildURL(for: query, page: page) else { return }
-        currentTask = AppEnvironment.network.dataTask(with: url) { result in
-            let imagesResult: Result<[Image], ImageSearchError> = result
-                .mapError(ImageSearchError.requestError)
-                .flatMap { data in
-                do {
-                    let response = try JSONDecoder().decode(FlickrResponse.self, from: data)
-                    return .success(response.photos.photo)
-                } catch {
-                    return .failure(.decodingError(error))
-                }
-            }
-            completion(imagesResult)
+    func search(_ query: String, page: Int) -> Observable<[Image]> {
+        guard let url = buildURL(for: query, page: page) else {
+            return .error(ImageSearchError.invalidSearchTerm(query) )
         }
-        currentTask?.resume()
-    }
-
-    func cancel() {
-        currentTask?.cancel()
+        return URLSession.shared.rx.data(request: URLRequest(url: url))
+            .flatMap { data in
+                return Observable.create { observer in
+                    do {
+                        let response = try JSONDecoder().decode(FlickrResponse.self, from: data)
+                        observer.onNext(response.photos.photo)
+                    } catch {
+                        observer.onError(ImageSearchError.decodingError(error))
+                    }
+                    return Disposables.create()
+                }
+        }
     }
 
     private func buildURL(for query: String, page: Int) -> URL? {
