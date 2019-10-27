@@ -24,3 +24,11 @@ extension UICollectionView {
         register(UINib(nibName: type.identifier, bundle: nil), forCellWithReuseIdentifier: type.identifier)
     }
 }
+
+extension UITableViewCell: Identifiable { }
+
+extension UITableView {
+    func register<T: UITableViewCell>(_ type: T.Type) {
+        register(type, forCellReuseIdentifier: type.identifier)
+    }
+}

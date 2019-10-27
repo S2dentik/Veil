@@ -6,7 +6,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidFinishLaunching(_ application: UIApplication) {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: ImageSearchViewController.build(history: SearchHistory()))
+        window?.rootViewController = UINavigationController(rootViewController: ImageSearchBuilder.build())
         window?.makeKeyAndVisible()
     }
 }

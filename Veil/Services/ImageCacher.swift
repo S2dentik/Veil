@@ -1,8 +1,16 @@
 import Foundation
+import RxSwift
+
+protocol Cacher {
+    func save(_ data: Data, named name: String)
+    func retrieve(named name: String) -> Observable<Data?>
+}
 
 final class ImageCacher: Cacher {
 
     private let queue = DispatchQueue(label: "IMAGE_CACHER_SERIAL_QUEUE")
+    // we need this queue to synchronize access to `filesInQueue`
+    // and using `queue` might take some time if some images are currently being written
     private let filesQueue = DispatchQueue(label: "FILES_IN_QUEUE_SERIAL_QUEUE")
 
     private let cache = NSCache<NSString, NSData>()
@@ -14,8 +22,12 @@ final class ImageCacher: Cacher {
         cache.setObject(data as NSData, forKey: name as NSString)
         // This function will not be called from inside, and outside calls cannot happen on `filesQueue` thread,
         // so no dead-lock here
-        if filesQueue.sync(execute: { filesInQueue.contains(name) }) { return }
-        filesQueue.async { self.filesInQueue.insert(name) }
+        if filesQueue.sync(execute: { // thread-safe check whether the file is currently being written to disk
+            let contains = filesInQueue.contains(name)
+            if !contains { filesInQueue.insert(name) }
+
+            return contains
+        }) { return }
         queue.async {
             // Explicitly capturing self here (in a real project view will deallocate,
             // but we need to keep saving all images)
@@ -25,30 +37,36 @@ final class ImageCacher: Cacher {
         }
     }
 
-    func retrieve(named name: String,
-                  completionQueue: DispatchQueue? = nil,
-                  completion: @escaping (Data?) -> Void) {
-        let callback: (Data?) -> Void = { data in
-            completionQueue?.async { completion(data) } ?? completion(data)
-        }
+    func retrieve(named name: String) -> Observable<Data?> {
         if let data = cache.object(forKey: name as NSString) as Data? {
-            return callback(data)
+            return .just(data)
         }
-        let path = fullPath(forImageNamed: name)
-        if AppEnvironment.storage.fileExists(atPath: path) {
-            queue.async {
-                callback(AppEnvironment.storage.contents(atPath: path))
+        return Observable.create { observer in
+            let path = self.fullPath(forImageNamed: name)
+            let complete: (Data?) -> Void = { data in
+                observer.onNext(data)
+                observer.onCompleted()
             }
-        }
-        // The file might still be in queue, asyncing it on `filesQueue`
-        // will retrieve it after it's saved since it's serial
-        filesQueue.async { [weak self] in
-            guard self?.filesInQueue.contains(name) == true else { return callback(nil) }
-            self?.queue.async {
-                let contents = AppEnvironment.storage.contents(atPath: path)
-                contents.map { self?.cache.setObject($0 as NSData, forKey: name as NSString) }
-                callback(contents)
+            if AppEnvironment.storage.fileExists(atPath: path) {
+                self.queue.async {
+                    AppEnvironment.storage.contents(atPath: path).map(complete)
+                }
+            } else {
+                // The file might still be in queue, asyncing it on `filesQueue`
+                // will retrieve it after it's saved since it's serial
+                self.filesQueue.async {
+                    guard self.filesInQueue.contains(name) == true else { return complete(nil) }
+                    self.queue.async {
+                        let contents = AppEnvironment.storage.contents(atPath: path)
+                        contents.map { self.cache.setObject($0 as NSData, forKey: name as NSString) }
+                        complete(contents)
+                    }
+                }
             }
+
+            // we'd normally unqueue the block here, but no time to switch to operation queue
+            // or write a custom Rx wrapper over file manager
+            return Disposables.create()
         }
     }
 

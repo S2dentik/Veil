@@ -1,8 +1,8 @@
 import Foundation
+import RxSwift
 
 protocol Network {
-    func dataTask(with url: URL,
-                  completion: @escaping (Result<Data, RequestError>) -> Void) -> NetworkTask
+    func data(request: URLRequest) -> Observable<Data>
 }
 
-extension URLSession: Network { }
+extension Reactive: Network where Base: URLSession { }

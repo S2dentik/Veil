@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 final class AppEnvironment {
     static var current: Environment {
@@ -28,6 +29,6 @@ extension AppEnvironment {
 
 class Environment {
     var storage: Storage = FileManager.default
-    var network: Network = URLSession.shared
+    var network: Network = URLSession.shared.rx
     var cacher: Cacher = ImageCacher()
 }

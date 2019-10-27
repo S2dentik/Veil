@@ -1,16 +1,20 @@
 import UIKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 
-protocol ImageSearchViewInput: class {
-    func displayError(_ error: String)
-//    func insert(at indexPaths: [IndexPath])
-//    func delete(at indexPaths: [IndexPath])
+protocol ImageSearchView {
+    var scrolledToBottom: Observable<Void> { get }
+    var search: BehaviorRelay<String> { get }
+    var searchFinished: Observable<Void> { get }
 }
 
-final class ImageSearchViewController: UIViewController, StoryboardInstantiable {
+final class ImageSearchViewController: UIViewController, ImageSearchView, StoryboardInstantiable {
 
     static let storyboardName = "Main"
 
     let disposeBag = DisposeBag()
+    var model: ImageSearchViewModelType!
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var searchHistoryTableView: UITableView!
@@ -20,29 +24,100 @@ final class ImageSearchViewController: UIViewController, StoryboardInstantiable 
     fileprivate let sectionInsets: CGFloat = 10
     fileprivate let numberOfItemsInRow = 2
 
-    var output: ImageSearchViewOutput!
+    private var searchBarText: String {
+        get {
+            searchController.searchBar.text ?? ""
+        }
+        set {
+            searchController.searchBar.text = newValue
+            searchController.searchBar.endEditing(true)
+        }
+    }
+
+    lazy var scrolledToBottom: Observable<Void> = {
+        collectionView.rx.contentOffset
+            .map { $0.y + self.collectionView.bounds.height + 20 > self.collectionView.contentSize.height }
+            .distinctUntilChanged()
+            .filter { $0 }.map { _ in }
+    }()
+    lazy var searchFinished = searchController.searchBar.rx.textDidEndEditing.asObservable()
+    let search = BehaviorRelay<String>(value: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.autocapitalizationType = .none
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
 
-        searchHistoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-
+        searchHistoryTableView.register(UITableViewCell.self)
         collectionView.register(ImageCollectionViewCell.self)
         collectionView.register(ActivityIndicatorReusableView.self)
+
+        setup()
+    }
+
+    private func setup() {
+        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        searchController.searchBar.rx.text.orEmpty.bind(to: search).disposed(by: disposeBag)
+        searchController.searchBar.rx.cancelButtonClicked.map { "" }.bind(to: search).disposed(by: disposeBag)
+
+        searchController.searchBar.rx
+            .textDidBeginEditing.bind(onNext: { [weak self] in self?.searchHistoryTableView.isHidden = false })
+            .disposed(by: disposeBag)
+
+        searchFinished
+            .subscribe(onNext: { [weak self] in self?.searchHistoryTableView.isHidden = true })
+            .disposed(by: disposeBag)
+
+        search
+            .subscribe(onNext: { [weak self] _ in self?.collectionView.contentOffset = .zero })
+            .disposed(by: disposeBag)
+
+        searchHistoryTableView.rx.itemSelected.asObservable()
+            .compactMap { [weak self] in self?.model.pastSearches.value[$0.item] }
+            .subscribe(onNext: { [weak self] in self?.searchBarText = $0 })
+            .disposed(by: disposeBag)
     }
 }
 
-extension ImageSearchViewController: ImageSearchViewInput {
-    func displayError(_ error: String) {
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: false, completion: nil)
+extension ImageSearchViewController {
+    func bind(to viewModel: ImageSearchViewModelType) {
+        self.model = viewModel
+        _ = view
+
+        search.asObservable()
+            .flatMap { [weak self] query -> Observable<[String]> in
+                let searches = self?.model.pastSearches.asObservable() ?? .empty()
+                if query.isEmpty { return searches } // "Cat".contains("") returns false
+                return searches.map { $0.filter { $0.contains(query) }}
+            }
+            .bind(to: searchHistoryTableView.rx.items(cellIdentifier: UITableViewCell.identifier,
+                                                    cellType: UITableViewCell.self)) { _, item, cell in
+                                                        cell.textLabel?.text = item
+            }
+            .disposed(by: disposeBag)
+
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, Image>>(configureCell: { [weak model] _, cv, indexPath, image in
+            let cell: ImageCollectionViewCell = cv.dequeue(at: indexPath)
+            cell.image = model?.data(for: image).map(UIImage.init).compactMap { $0 }
+
+            return cell
+        }, configureSupplementaryView: { _, cv, kind, indexPath in
+            let footer: ActivityIndicatorReusableView = cv.dequeue(at: indexPath)
+            footer.startLoading()
+
+            return footer
+        })
+
+        model.images
+            .map { [AnimatableSectionModel<String, Image>(model: "", items: $0)] }
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
     }
 }
 
@@ -73,99 +148,5 @@ extension ImageSearchViewController: UICollectionViewDelegateFlowLayout {
                         referenceSizeForFooterInSection section: Int) -> CGSize {
         guard let text = searchController.searchBar.text, text.count > 0 else { return .zero }
         return CGSize(width: collectionView.bounds.width, height: 50)
-    }
-}
-
-import RxCocoa
-import RxSwift
-import RxDataSources
-
-extension ImageSearchViewController {
-    static func build(history: SearchHistory, fetcher: ImageFetcher = FlickrImageFetcher()) -> ImageSearchViewController {
-        let vc = ImageSearchViewController.instantiate()
-        vc.output = ImageSearchPresenter(view: vc)
-        _ = vc.view
-
-        Observable.just(history.items)
-            .bind(to: vc.searchHistoryTableView.rx.items(cellIdentifier: "UITableViewCell",
-                                                         cellType: UITableViewCell.self)) { _, item, cell in
-                                                            cell.textLabel?.text = item
-        }.disposed(by: vc.disposeBag)
-
-        vc.searchController.searchBar.rx
-            .textDidBeginEditing.bind(onNext: { vc.searchHistoryTableView.isHidden = false })
-            .disposed(by: vc.disposeBag)
-        vc.searchController.searchBar.rx
-            .textDidEndEditing.bind(onNext: { vc.searchHistoryTableView.isHidden = true })
-            .disposed(by: vc.disposeBag)
-
-        vc.collectionView.rx.setDelegate(vc).disposed(by: vc.disposeBag)
-
-        var page = 0
-        var images = [Image]()
-
-        let resetState = {
-            page = 0
-            images = []
-        }
-
-        let searchText = vc.searchController.searchBar.rx
-            .text.asObservable()
-            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-            .do(onNext: { _ in resetState() })
-            .compactMap { $0 }
-
-
-        let scrolledToBottom = vc.collectionView.rx.contentOffset.map {
-            $0.y + vc.collectionView.bounds.height + 20 > vc.collectionView.contentSize.height
-        }
-        .distinctUntilChanged()
-        .filter { $0 }.map { _ in }
-        .do(onNext: { page += 1 })
-        .compactMap { vc.searchController.searchBar.text }
-
-        let search = Observable.merge(searchText, scrolledToBottom)
-            .map { ($0, page) }
-            .distinctUntilChanged { $0.0 == $1.0 && $0.1 == $1.1 }
-            .flatMap { (query, page) -> Observable<[Image]> in
-                if query.isEmpty {
-                    resetState()
-                    return .just([])
-                }
-                return fetcher.search(query, page:  page)
-        }
-
-        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, Image>>(configureCell: { _, cv, indexPath, image in
-            let cell: ImageCollectionViewCell = cv.dequeue(at: indexPath)
-            cell.displayImage(image)
-
-            return cell
-        }, configureSupplementaryView: { _, cv, kind, indexPath in
-            let footer: ActivityIndicatorReusableView = cv.dequeue(at: indexPath)
-            footer.startLoading()
-
-            return footer
-        })
-
-        DispatchQueue.main.async {
-            search
-                .map { newImages in
-                    images += newImages
-                    return [AnimatableSectionModel<String, Image>(model: "", items: images)]
-                }
-                .bind(to: vc.collectionView.rx.items(dataSource: dataSource))
-                .disposed(by: vc.disposeBag)
-        }
-
-        return vc
-    }
-}
-
-import Differentiator
-extension Image: IdentifiableType {
-    var identity: Image {
-        return Image(id: "\(Int.random(in: 10000...100000))",
-            farm: Int.random(in: 10000...100000),
-            server: "", secret: "")
     }
 }

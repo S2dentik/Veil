@@ -8,7 +8,10 @@ final class ImageCollectionViewCell: CollectionViewCell {
     private var disposeBag = DisposeBag()
     var image: Observable<UIImage>? {
         didSet {
-            image?.bind(to: imageView.rx.image).disposed(by: disposeBag)
+            image?
+                .observeOn(MainScheduler.instance)
+                .do(onNext: { [weak self] _ in self?.contentView.backgroundColor = .clear })
+                .bind(to: imageView.rx.image).disposed(by: disposeBag)
         }
     }
 
@@ -22,6 +25,7 @@ final class ImageCollectionViewCell: CollectionViewCell {
         super.prepareForReuse()
 
         contentView.backgroundColor = .lightGray
+        imageView.image = nil
         disposeBag = DisposeBag()
     }
 }
