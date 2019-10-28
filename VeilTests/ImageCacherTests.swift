@@ -1,10 +1,13 @@
 @testable import Veil
 import XCTest
+import RxSwift
 
 final class ImageCacherTestCase: XCTestCase {
 
     var subject: ImageCacher!
     var storage: MockStorage!
+
+    var disposeBag = DisposeBag()
 
     override func setUp() {
         super.setUp()
@@ -14,6 +17,12 @@ final class ImageCacherTestCase: XCTestCase {
         AppEnvironment.current.storage = storage
 
         subject = ImageCacher()
+    }
+
+    override func tearDown() {
+        disposeBag = DisposeBag()
+
+        super.tearDown()
     }
 
     func test_save_eventuallyCreatesFileWithData() {
@@ -35,9 +44,10 @@ final class ImageCacherTestCase: XCTestCase {
         let correctImageReturned = XCTestExpectation(description: "Correct image was returned")
 
         // WHEN
-        subject.retrieve(named: name) { imageData in
+        subject.retrieve(named: name).subscribe(onNext: { imageData in
             if imageData == data { correctImageReturned.fulfill() }
-        }
+        })
+        .disposed(by: disposeBag)
 
         // THEN
         wait(for: [correctImageReturned], timeout: 3)
@@ -53,9 +63,10 @@ final class ImageCacherTestCase: XCTestCase {
         storage.contentsAtPathStub = data
 
         // WHEN
-        subject.retrieve(named: name) { imageData in
+        subject.retrieve(named: name).subscribe(onNext: { imageData in
             if imageData == data { correctImageReturned.fulfill() }
-        }
+        })
+        .disposed(by: disposeBag)
 
         // THEN
         wait(for: [correctImageReturned], timeout: 3)

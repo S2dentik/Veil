@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56D81D0CB8675ADAB16ED0A1 /* libPods-VeilTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7410EA3CAE8D532B117D4A6 /* libPods-VeilTests.a */; };
 		693163C8232F8581003FB33D /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */; };
 		693163CA232F96F1003FB33D /* ActivityIndicatorReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */; };
 		693163CC232F973D003FB33D /* ActivityIndicatorReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */; };
@@ -23,9 +24,6 @@
 		6996D13A23312283001EE5F5 /* MockNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996D13923312283001EE5F5 /* MockNetwork.swift */; };
 		6996D13C233126CF001EE5F5 /* ImageCacherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996D13B233126CF001EE5F5 /* ImageCacherTests.swift */; };
 		6996D13E2331270D001EE5F5 /* MockImageCacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996D13D2331270D001EE5F5 /* MockImageCacher.swift */; };
-		6996D14023313724001EE5F5 /* ImageSearchPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996D13F23313724001EE5F5 /* ImageSearchPresenterTests.swift */; };
-		6996D142233137D8001EE5F5 /* MockImageSearchViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996D141233137D8001EE5F5 /* MockImageSearchViewInput.swift */; };
-		6996D14423313948001EE5F5 /* MockImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996D14323313948001EE5F5 /* MockImage.swift */; };
 		69A9F6E2232F8003008C7A75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F6E1232F8003008C7A75 /* AppDelegate.swift */; };
 		69A9F6E4232F8003008C7A75 /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A9F6E3232F8003008C7A75 /* ImageSearchViewController.swift */; };
 		69A9F6E7232F8003008C7A75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69A9F6E5232F8003008C7A75 /* Main.storyboard */; };
@@ -39,6 +37,9 @@
 		69BAE1CD23663BC800534B6E /* ImageSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1CC23663BC800534B6E /* ImageSearchViewModel.swift */; };
 		69BAE1CF23664D7600534B6E /* FlickrImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1CE23664D7600534B6E /* FlickrImage.swift */; };
 		69BAE1D22366501600534B6E /* ImageSearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1D12366501600534B6E /* ImageSearchBuilder.swift */; };
+		69BAE1D62366D2EB00534B6E /* ImageSearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1D52366D2EB00534B6E /* ImageSearchViewModelTests.swift */; };
+		69BAE1D82366D35B00534B6E /* MockSearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1D72366D35B00534B6E /* MockSearchHistory.swift */; };
+		69BAE1DA2366D58E00534B6E /* MockImageSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BAE1D92366D58E00534B6E /* MockImageSearchView.swift */; };
 		F7FE27E80A7FAFC1D9156ADB /* libPods-Veil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3729B62E416CBB0F12343D20 /* libPods-Veil.a */; };
 /* End PBXBuildFile section */
 
@@ -53,8 +54,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27125FC11D8AABCEA0B9FCFA /* Pods-VeilTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeilTests.release.xcconfig"; path = "Target Support Files/Pods-VeilTests/Pods-VeilTests.release.xcconfig"; sourceTree = "<group>"; };
 		3729B62E416CBB0F12343D20 /* libPods-Veil.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Veil.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		41F48EB94C60EFDDC7D0EC80 /* Pods-Veil.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Veil.debug.xcconfig"; path = "Target Support Files/Pods-Veil/Pods-Veil.debug.xcconfig"; sourceTree = "<group>"; };
+		4D6DEEEF153F1278FD43604E /* Pods-VeilTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VeilTests.debug.xcconfig"; path = "Target Support Files/Pods-VeilTests/Pods-VeilTests.debug.xcconfig"; sourceTree = "<group>"; };
 		693163C7232F8581003FB33D /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		693163C9232F96F1003FB33D /* ActivityIndicatorReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorReusableView.swift; sourceTree = "<group>"; };
 		693163CB232F973D003FB33D /* ActivityIndicatorReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityIndicatorReusableView.xib; sourceTree = "<group>"; };
@@ -71,9 +74,6 @@
 		6996D13923312283001EE5F5 /* MockNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetwork.swift; sourceTree = "<group>"; };
 		6996D13B233126CF001EE5F5 /* ImageCacherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacherTests.swift; sourceTree = "<group>"; };
 		6996D13D2331270D001EE5F5 /* MockImageCacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageCacher.swift; sourceTree = "<group>"; };
-		6996D13F23313724001EE5F5 /* ImageSearchPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchPresenterTests.swift; sourceTree = "<group>"; };
-		6996D141233137D8001EE5F5 /* MockImageSearchViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageSearchViewInput.swift; sourceTree = "<group>"; };
-		6996D14323313948001EE5F5 /* MockImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImage.swift; sourceTree = "<group>"; };
 		69A9F6DE232F8003008C7A75 /* Veil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Veil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69A9F6E1232F8003008C7A75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69A9F6E3232F8003008C7A75 /* ImageSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +91,11 @@
 		69BAE1CC23663BC800534B6E /* ImageSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewModel.swift; sourceTree = "<group>"; };
 		69BAE1CE23664D7600534B6E /* FlickrImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImage.swift; sourceTree = "<group>"; };
 		69BAE1D12366501600534B6E /* ImageSearchBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchBuilder.swift; sourceTree = "<group>"; };
+		69BAE1D52366D2EB00534B6E /* ImageSearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSearchViewModelTests.swift; sourceTree = "<group>"; };
+		69BAE1D72366D35B00534B6E /* MockSearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchHistory.swift; sourceTree = "<group>"; };
+		69BAE1D92366D58E00534B6E /* MockImageSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageSearchView.swift; sourceTree = "<group>"; };
 		97A191E868F1B8EFF640EC73 /* Pods-Veil.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Veil.release.xcconfig"; path = "Target Support Files/Pods-Veil/Pods-Veil.release.xcconfig"; sourceTree = "<group>"; };
+		E7410EA3CAE8D532B117D4A6 /* libPods-VeilTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VeilTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56D81D0CB8675ADAB16ED0A1 /* libPods-VeilTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +123,8 @@
 			children = (
 				41F48EB94C60EFDDC7D0EC80 /* Pods-Veil.debug.xcconfig */,
 				97A191E868F1B8EFF640EC73 /* Pods-Veil.release.xcconfig */,
+				4D6DEEEF153F1278FD43604E /* Pods-VeilTests.debug.xcconfig */,
+				27125FC11D8AABCEA0B9FCFA /* Pods-VeilTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -162,8 +169,8 @@
 				6996D13D2331270D001EE5F5 /* MockImageCacher.swift */,
 				6996D13723312105001EE5F5 /* MockStorage.swift */,
 				6996D13923312283001EE5F5 /* MockNetwork.swift */,
-				6996D141233137D8001EE5F5 /* MockImageSearchViewInput.swift */,
-				6996D14323313948001EE5F5 /* MockImage.swift */,
+				69BAE1D72366D35B00534B6E /* MockSearchHistory.swift */,
+				69BAE1D92366D58E00534B6E /* MockImageSearchView.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -209,7 +216,7 @@
 				693163F423311FA8003FB33D /* Mocks */,
 				69A9F6F6232F8006008C7A75 /* FlickrImageFetcherTests.swift */,
 				6996D13B233126CF001EE5F5 /* ImageCacherTests.swift */,
-				6996D13F23313724001EE5F5 /* ImageSearchPresenterTests.swift */,
+				69BAE1D52366D2EB00534B6E /* ImageSearchViewModelTests.swift */,
 				69A9F6F8232F8006008C7A75 /* Info.plist */,
 			);
 			path = VeilTests;
@@ -250,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				3729B62E416CBB0F12343D20 /* libPods-Veil.a */,
+				E7410EA3CAE8D532B117D4A6 /* libPods-VeilTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -279,6 +287,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69A9F6FE232F8006008C7A75 /* Build configuration list for PBXNativeTarget "VeilTests" */;
 			buildPhases = (
+				48CCF0DC1A54E169B5C8491A /* [CP] Check Pods Manifest.lock */,
 				69A9F6EE232F8006008C7A75 /* Sources */,
 				69A9F6EF232F8006008C7A75 /* Frameworks */,
 				69A9F6F0232F8006008C7A75 /* Resources */,
@@ -354,6 +363,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		48CCF0DC1A54E169B5C8491A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VeilTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DA3B85CC6E5BF37520F1EB27 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -408,15 +439,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6996D14023313724001EE5F5 /* ImageSearchPresenterTests.swift in Sources */,
 				6996D13A23312283001EE5F5 /* MockNetwork.swift in Sources */,
 				69A9F6F7232F8006008C7A75 /* FlickrImageFetcherTests.swift in Sources */,
 				6996D13C233126CF001EE5F5 /* ImageCacherTests.swift in Sources */,
-				6996D14423313948001EE5F5 /* MockImage.swift in Sources */,
 				6996D13623311FE1001EE5F5 /* MockImageFetcher.swift in Sources */,
+				69BAE1D82366D35B00534B6E /* MockSearchHistory.swift in Sources */,
 				6996D13823312105001EE5F5 /* MockStorage.swift in Sources */,
+				69BAE1D62366D2EB00534B6E /* ImageSearchViewModelTests.swift in Sources */,
+				69BAE1DA2366D58E00534B6E /* MockImageSearchView.swift in Sources */,
 				6996D13E2331270D001EE5F5 /* MockImageCacher.swift in Sources */,
-				6996D142233137D8001EE5F5 /* MockImageSearchViewInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +635,7 @@
 		};
 		69A9F6FF232F8006008C7A75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D6DEEEF153F1278FD43604E /* Pods-VeilTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -625,6 +657,7 @@
 		};
 		69A9F700232F8006008C7A75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27125FC11D8AABCEA0B9FCFA /* Pods-VeilTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

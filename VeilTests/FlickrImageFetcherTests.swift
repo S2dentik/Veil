@@ -1,5 +1,6 @@
 @testable import Veil
 import XCTest
+import RxBlocking
 
 final class FlickrImageFetchrTestCase: XCTestCase {
 
@@ -19,49 +20,51 @@ final class FlickrImageFetchrTestCase: XCTestCase {
         subject = FlickrImageFetcher()
     }
 
-    func test_search_createsTaskAndResumesIt() {
-        // GIVEN
-        let task = MockNetworkTask()
-        network.dataTaskStub = task
-
-        // WHEN
-        subject.search("query", page: 1, completion: { _ in })
-
-        // THEN
-        XCTAssert(network.dataTaskCalled)
-        XCTAssert(task.resumeCalled)
-    }
-
     func test_search_createsURLWithCorrectParameters() {
         // GIVEN
-        let task = MockNetworkTask()
-        network.dataTaskStub = task
-
         let query = "query"
         let page = 27
 
         // WHEN
-        subject.search(query, page: page, completion: { _ in })
+        _ = subject.search(query, page: page)
 
         // THEN
-        let parameters = URLComponents(url: network.dataTaskCalledURL,
-                                          resolvingAgainstBaseURL: false)!.queryItems ?? []
+        let parameters = network.dataRequest?.url
+            .flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?.queryItems ?? []
         XCTAssert(parameters.contains(URLQueryItem(name: "page", value: "\(page)")))
         XCTAssert(parameters.contains(URLQueryItem(name: "text", value: query)))
     }
 
-    func test_search_cancelsPreviousRequest() {
+    func test_search_firesRequestAndDecodesImage() {
         // GIVEN
-        let task1 = MockNetworkTask()
-        let task2 = MockNetworkTask()
-        network.dataTaskStub = task1
+        let data = """
+        {
+        "photos": {
+            "page": 1,
+            "pages": 200,
+            "perpage": 100,
+            "total": "47564",
+            "photo": [
+                {
+                    "id": "1",
+                    "farm": 4,
+                    "server": "5",
+                    "secret": "secret",
+                    "photos": []
+                }
+            ]
+            }
+        }
+        """.data(using: .utf8)!
+        network.dataStub = data
 
         // WHEN
-        subject.search("query1", page: 1, completion: { _ in })
-        network.dataTaskStub = task2
-        subject.search("query2", page: 2, completion: { _ in })
+        let result = try! subject
+            .search("query", page: 1)
+            .toBlocking()
+            .first()
 
         // THEN
-        XCTAssert(task1.cancelCalled)
+        XCTAssertEqual(result?.first, try! JSONDecoder().decode(FlickrResponse.self, from: data).photos.photo.first)
     }
 }

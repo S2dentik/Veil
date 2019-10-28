@@ -1,22 +1,18 @@
 @testable import Veil
+import RxSwift
 
 final class MockImageFetcher: ImageFetcher {
 
-    var searchCalled = false
+    let searchSubject = PublishSubject<(String, Int)>()
+
     var searchQuery: String?
     var searchPage: Int?
-    var searchStub: Result<[Image], ImageSearchError>?
-    func search(_ query: String,
-                page: Int,
-                completion: @escaping (Result<[Image], ImageSearchError>) -> Void) {
-        searchCalled = true
+    var searchStub = [FlickrImage]()
+    func search(_ query: String, page: Int) -> Observable<[FlickrImage]> {
         searchQuery = query
         searchPage = page
-        searchStub.map(completion)
-    }
+        searchSubject.onNext((query, page))
 
-    var cancelCalled = false
-    func cancel() {
-        cancelCalled = true
+        return .just(searchStub)
     }
 }

@@ -1,28 +1,19 @@
 @testable import Veil
 import Foundation
+import RxSwift
 
 final class MockNetwork: Network {
 
-    var dataTaskCalledURL = URL(string: "dataTask")!
-    var dataTaskCalled = false
-    var dataTaskStub = MockNetworkTask()
-    func dataTask(with url: URL,
-                  completion: @escaping (Result<Data, RequestError>) -> Void) -> NetworkTask {
-        dataTaskCalled = true
-        dataTaskCalledURL = url
+    let requests = PublishSubject<URL>()
 
-        return dataTaskStub
-    }
-}
+    var dataStub = Data()
+    var dataRequest: URLRequest?
+    var dataCalled = false
+    func data(request: URLRequest) -> Observable<Data> {
+        dataRequest = request
+        dataCalled = true
+        requests.onNext(request.url!)
 
-final class MockNetworkTask: NetworkTask {
-    var resumeCalled = false
-    func resume() {
-        resumeCalled = true
-    }
-
-    var cancelCalled = false
-    func cancel() {
-        cancelCalled = true
+        return .just(dataStub)
     }
 }

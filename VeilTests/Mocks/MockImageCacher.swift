@@ -1,5 +1,6 @@
 @testable import Veil
 import Foundation
+import RxSwift
 
 final class MockImageCacher: Cacher {
 
@@ -12,12 +13,8 @@ final class MockImageCacher: Cacher {
         saveCalledName = name
     }
 
-    var retrieveCalled = false
-    var retrieveCalledName: String?
-    func retrieve(named name: String,
-                  completionQueue: DispatchQueue?,
-                  completion: @escaping (Data?) -> Void) {
-        retrieveCalled = true
-        retrieveCalledName = name
+    var retrieveStub: Data?
+    func retrieve(named name: String) -> Observable<Data?> {
+        return .just(retrieveStub)
     }
 }
